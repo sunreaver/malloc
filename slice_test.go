@@ -79,7 +79,19 @@ func BenchmarkMakeSlice18M(b *testing.B) {
 	b.ResetTimer()
 
 	for index := 0; index < b.N; index++ {
-		MakeSlice(1024 * 1024 * 18)
+		s := MakeSlice(1024 * 1024 * 18)
+		FreeSlice(s)
+	}
+}
+
+func BenchmarkMakeSlice10M(b *testing.B) {
+	SetMaxOffheapBytes(MinOffheapSlice * 1024) // 16MB
+
+	b.ResetTimer()
+
+	for index := 0; index < b.N; index++ {
+		s := MakeSlice(1024 * 1024 * 10)
+		FreeSlice(s)
 	}
 }
 
@@ -89,7 +101,8 @@ func BenchmarkMakeSlice1M(b *testing.B) {
 	b.ResetTimer()
 
 	for index := 0; index < b.N; index++ {
-		MakeSlice(1024 * 1024 * 1)
+		s := MakeSlice(1024 * 1024 * 1)
+		FreeSlice(s)
 	}
 }
 
@@ -99,6 +112,7 @@ func BenchmarkMakeSlice10K(b *testing.B) {
 	b.ResetTimer()
 
 	for index := 0; index < b.N; index++ {
-		MakeSlice(1024 * 10)
+		s := MakeSlice(1024 * 10)
+		FreeSlice(s)
 	}
 }
